@@ -1,0 +1,24 @@
+﻿@using Blazor_Projects.Components.Navigation
+
+<nav class="nav" id="main-nav" style="@_navBarCss">
+    <CascadingValue Value="_navSectionCss">
+            @ChildContent
+    </CascadingValue>
+</nav>
+<div class="content" style="@_pageContentCss">
+    @Body
+</div>
+
+
+@if (Development)
+{
+    <section class="dev">
+        <div class="dev-buttons">
+            <button id="btn-top" onclick="@(() => ChangeNavBarPostion(NavigationPositions.Top))"><i class="fa-solid fa-arrow-up"></i></button>
+            <button id="btn-right" onclick="@(() => ChangeNavBarPostion(NavigationPositions.Right))"><i class="fa-solid fa-arrow-right"></i></button>
+            <button id="btn-bottom" onclick="@(() => ChangeNavBarPostion(NavigationPositions.Bottom))"><i class="fa-solid fa-arrow-down"></i></button>
+            <button id="btn-left" onclick="@(() => ChangeNavBarPostion(NavigationPositions.Left))"><i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+    </section>
+}
+

@@ -1,0 +1,16 @@
+﻿@using Blazor_Projects.Components.Navigation
+
+@inherits LayoutComponentBase
+
+<NavBar Position="NavigationPositions.Left" Body="@Body" Development=true ContentPadding="2%" Gap="1em">
+        <NavSection Gap="2em">
+            <Blazor_Projects.Components.Navigation.NavLink Href="#" Text="One"></Blazor_Projects.Components.Navigation.NavLink>
+            <Blazor_Projects.Components.Navigation.NavLink Href="#" Text="Two"></Blazor_Projects.Components.Navigation.NavLink>
+            <Blazor_Projects.Components.Navigation.NavLink Href="#" Text="Three"></Blazor_Projects.Components.Navigation.NavLink>
+            <Blazor_Projects.Components.Navigation.NavLink Href="#" Text="Four"></Blazor_Projects.Components.Navigation.NavLink>
+        </NavSection>
+    <NavSection Gap="4em">
+            <Blazor_Projects.Components.Navigation.NavLink Href="#" Text="Five"></Blazor_Projects.Components.Navigation.NavLink>
+            <Blazor_Projects.Components.Navigation.NavLink Href="#" Text="Six"></Blazor_Projects.Components.Navigation.NavLink>
+        </NavSection>
+</NavBar>
