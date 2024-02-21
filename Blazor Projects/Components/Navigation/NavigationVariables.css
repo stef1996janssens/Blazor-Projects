@@ -1,0 +1,16 @@
+﻿:root {
+   --nav-bg-color: #ffffff;
+   --nav-link-color: #000000;
+   --nav-link-hover-color: #f0f0f0;
+   --nav-height: auto;
+   --nav-width: auto;
+   --nav-gap: auto;
+   --nav-padding: auto;
+        
+   --content-padding-top: auto;
+   --content-padding-right: auto;
+   --content-padding-bottom: auto;
+   --content-padding-left: auto;
+
+   --nav-section-gap: auto;
+}

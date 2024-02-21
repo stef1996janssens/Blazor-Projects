@@ -1,6 +1,10 @@
-﻿<div class="nav-section" style="@NavLinkCss">
-    <ul style="@NavLinkCss">
-        @ChildContent
+﻿@inherits BaseComponent
+
+<div class="nav-section @NavLinkCss">
+    <ul class="@NavLinkCss">
+        <CascadingValue Value="Position">
+            @ChildContent
+        </CascadingValue>
     </ul>
 </div>
 

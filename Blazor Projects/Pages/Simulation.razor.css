@@ -1,0 +1,38 @@
+﻿#simulation-container {
+	display: flex;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+}
+
+#upper-canvas-container {
+    width: 80%;
+    height: 100%;
+    overflow: scroll;
+}
+
+#canvas-container {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    background-color: antiquewhite;
+}
+
+#tile-canvas {
+    margin: 0;
+    background-color: antiquewhite;
+    cursor: url('../resources/pen_icon.ico'), auto;
+}
+
+#tile-canvas:hover {
+    cursor: url('../resources/pen_icon.ico'), auto;
+}
+
+.parameters {
+    background-color: antiquewhite;
+    width: 18%;
+    color: black;
+}
+
+

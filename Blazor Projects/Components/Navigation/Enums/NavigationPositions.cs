@@ -1,4 +1,4 @@
-﻿namespace Blazor_Projects.Components.Navigation;
+﻿namespace Blazor_Projects.Components.Navigation.Enums;
 
 public enum NavigationPositions
 {

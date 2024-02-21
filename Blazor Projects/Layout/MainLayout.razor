@@ -1,16 +1,18 @@
-﻿@using Blazor_Projects.Components.Navigation
+﻿@using Blazor_Projects.Components.Navigation;
+@using Blazor_Projects.Components.Navigation.Enums
 
 @inherits LayoutComponentBase
 
-<NavBar Position="NavigationPositions.Left" Body="@Body" Development=true ContentPadding="2%" Gap="1em">
-        <NavSection Gap="2em">
-            <Blazor_Projects.Components.Navigation.NavLink Href="#" Text="One"></Blazor_Projects.Components.Navigation.NavLink>
-            <Blazor_Projects.Components.Navigation.NavLink Href="#" Text="Two"></Blazor_Projects.Components.Navigation.NavLink>
-            <Blazor_Projects.Components.Navigation.NavLink Href="#" Text="Three"></Blazor_Projects.Components.Navigation.NavLink>
-            <Blazor_Projects.Components.Navigation.NavLink Href="#" Text="Four"></Blazor_Projects.Components.Navigation.NavLink>
-        </NavSection>
-    <NavSection Gap="4em">
-            <Blazor_Projects.Components.Navigation.NavLink Href="#" Text="Five"></Blazor_Projects.Components.Navigation.NavLink>
-            <Blazor_Projects.Components.Navigation.NavLink Href="#" Text="Six"></Blazor_Projects.Components.Navigation.NavLink>
-        </NavSection>
+<NavBar Position="NavigationPositions.Top"
+        Body="@Body"
+        ContentPadding="20px"
+        Padding="10px"
+        Gap="1em"
+        BackgroundColor="#38598b">
+    <NavSection Gap=".5em">
+        <Blazor_Projects.Components.Navigation.NavLink Href="" Text="Home" Icon="fa-solid fa-home"></Blazor_Projects.Components.Navigation.NavLink>
+        <Blazor_Projects.Components.Navigation.NavLink Href="/simulation" Text="Simulation" Icon="fa-solid fa-computer"></Blazor_Projects.Components.Navigation.NavLink>
+    </NavSection>
 </NavBar>
+
+<i class="fa-solid fa-gear settings-icon" @onclick="StateService.ChangeDevelopmentMode"></i>

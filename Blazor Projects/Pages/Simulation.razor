@@ -1,0 +1,25 @@
+﻿@page "/simulation"
+
+@inherits BasePage
+
+<div class="container" id="simulation-container">
+    <div class="container" id="upper-canvas-container">
+        <div class="container" id="canvas-container">
+            <canvas id="tile-canvas"></canvas>
+        </div>
+    </div>
+    <section class="parameters">
+        <div class="parameter">
+            Tile size: <input type="range" min="0" max="100" step="1" id="amountOfColumns" @bind-value="_tileSize" @oninput=@(e => SetJSVariable(e, "setTileSize")) /> @_tileSize
+        </div>
+
+        <div class="parameter">
+            Amount of columns: <input type="range" min="0" max="@_maxAmountOfColumns" step="1" id="amountOfColumns" @bind-value="_amountOfColumns" @oninput=@(e => SetJSVariable(e, "setAmountOfColumns")) /> @_amountOfColumns
+        </div>
+        <div class="parameter">
+            Amount of rows: <input type="range" min="0" max="@_maxAmountOfRows" step="1" id="amountOfRows" @bind-value="_amountOfRows" @oninput=@(e => SetJSVariable(e, "setAmountOfRows")) /> @_amountOfRows
+        </div>
+    </section>
+</div>
+
+

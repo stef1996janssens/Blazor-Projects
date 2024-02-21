@@ -1,16 +1,27 @@
-﻿@using Blazor_Projects.Components.Navigation
+﻿@using Blazor_Projects.Components.Navigation.Enums
+@inherits BaseComponent;
 
-<nav class="nav" id="main-nav" style="@_navBarCss">
-    <CascadingValue Value="_navSectionCss">
+
+@if (!_doneRendering && !BaseComponentInitalized)
+{
+    <div class="loading-overlay"></div>
+}
+
+<nav class="nav @_positionClass" id="main-nav">
+    <CascadingValue Value="Position">
+        <CascadingValue Value="_navSectionCss">
             @ChildContent
+        </CascadingValue>
     </CascadingValue>
+
 </nav>
-<div class="content" style="@_pageContentCss">
+
+<div class="content">
     @Body
 </div>
 
 
-@if (Development)
+@if (StateService.IsDevelopmentActive)
 {
     <section class="dev">
         <div class="dev-buttons">

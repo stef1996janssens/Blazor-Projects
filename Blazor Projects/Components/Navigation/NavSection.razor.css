@@ -1,9 +1,19 @@
-﻿ul{
-    list-style:none;
-    margin:0;
-    padding:0;
+﻿ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-ul, .nav-section{
+ul, .nav-section {
     display: flex;
+    gap: var(--nav-section-gap);
 }
+
+    .flex.column {
+        flex-direction: column;
+    }
+
+    .flex.row {
+        flex-direction: row;
+    }
+
