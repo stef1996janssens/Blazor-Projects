@@ -22,11 +22,6 @@
 #tile-canvas {
     margin: 0;
     background-color: antiquewhite;
-    cursor: url('../resources/pen_icon.ico'), auto;
-}
-
-#tile-canvas:hover {
-    cursor: url('../resources/pen_icon.ico'), auto;
 }
 
 .parameters {

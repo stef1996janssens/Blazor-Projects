@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazor_Projects.Components.Navigation.Enums;
+using Blazor_Projects.Models;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
 
@@ -12,14 +14,15 @@ public partial class Simulation : BasePage
     private int _amountOfRows = 0;
     private int _maxAmountOfRows = 100;
     private int _tileSize = 0;
+    private List<Tile> _tiles = new List<Tile>();
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         await ImportSimulationScript();
-
+        await InvokeGetTileCoordinates();
+        await GetTilesFromLocalStorage();
     }
-
 
     private async Task ImportSimulationScript()
     {
@@ -32,5 +35,35 @@ public partial class Simulation : BasePage
         var value = Convert.ToInt32(e.Value);
         await SimulationScript.InvokeVoidAsync(functionName, value);
         StateHasChanged();
+    }
+
+    private async Task InvokeGetTileCoordinates()
+    {
+        await SimulationScript.InvokeVoidAsync("getTileCoordinates", DotNetObjectReference.Create(this));
+    }
+
+    private async Task GetTilesFromLocalStorage()
+    {
+        var tilesFromLocalStorage = await LocalStorage.Get("Tiles");
+        if (!string.IsNullOrEmpty(tilesFromLocalStorage))
+        {
+            _tiles = JsonConvert.DeserializeObject<List<Tile>>(tilesFromLocalStorage) ?? new List<Tile>();
+        }
+
+    }
+
+    [JSInvokable]
+    public async Task GetTileCoordinates(List<Tile> tileCoordinates)
+    {
+        _tiles = tileCoordinates;
+        await LocalStorage.Set("Tiles", JsonConvert.SerializeObject(_tiles));
+
+    }
+
+    [JSInvokable]
+    public async Task UpdateTileCheckedState(Tile updatedTile)
+    {
+        var tile = _tiles.FirstOrDefault(x => x.X == updatedTile.X && x.Y == updatedTile.Y);
+        tile.Checked = true;
     }
 }

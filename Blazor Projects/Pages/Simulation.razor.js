@@ -10,6 +10,7 @@ var canvasHeight;
 var amountOfRows;
 var amountOfColumns;
 var squaresTopMostLeftCoordinates = []
+var dotnetInstance;
 
 registerWindowResizeHandler();
 registerClickHandler();
@@ -36,6 +37,8 @@ function handleOnClick(e) {
 
     var clickedRow = Math.floor(tileY / tileSize);
     var clickedCol = Math.floor(tileX / tileSize);
+
+    console.log()
 
     redrawTile(clickedCol, clickedRow);
 }
@@ -64,7 +67,10 @@ function drawGrid() {
             squaresTopMostLeftCoordinates.push(topMostLeftCoordinate);
         }
     }
+
+    dotnetInstance.invokeMethodAsync('GetTileCoordinates', squaresTopMostLeftCoordinates);
 }
+
 function drawLine(x1, y1, x2, y2, color = "black", lineWidth = "1px") {
     context.beginPath();
     context.moveTo(x1, y1);
@@ -98,8 +104,17 @@ export function setAmountOfRows(value) {
 }
 
 function redrawTile(x, y) {
-    context.clearRect(x * tileSize, y * tileSize, tileSize, tileSize);
+    var topLeftCoordinateX = x * tileSize;
+    var topLeftCoordinateY = y * tileSize;
+
+    context.clearRect(topLeftCoordinateX, topLeftCoordinateY, tileSize, tileSize);
     context.fillStyle = "hotpink"
-    context.fillRect(x * tileSize, y * tileSize, tileSize, tileSize); 
+    context.fillRect(topLeftCoordinateX, topLeftCoordinateY, tileSize, tileSize); 
+
+    var tileCoordinates = { X: topLeftCoordinateX, Y: topLeftCoordinateY };
+    dotnetInstance.invokeMethodAsync('UpdateTileCheckedState', tileCoordinates );
 }
 
+export function getTileCoordinates(dotNetHelper) {
+    dotnetInstance = dotNetHelper;
+}
