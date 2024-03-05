@@ -9,13 +9,10 @@ var canvasHeight;
 
 var amountOfRows;
 var amountOfColumns;
-var squaresTopMostLeftCoordinates = []
 var dotnetInstance;
 
 registerWindowResizeHandler();
 registerClickHandler();
-setCanvasSize();
-
 
 function registerWindowResizeHandler() {
     addEventListener("resize", (e) => { handleWindowResize() });
@@ -26,8 +23,7 @@ function registerClickHandler() {
 }
 
 function handleWindowResize() {
-    setCanvasSize();
-    drawGrid();
+    
 }
 
 function handleOnClick(e) {
@@ -38,15 +34,16 @@ function handleOnClick(e) {
     var clickedRow = Math.floor(tileY / tileSize);
     var clickedCol = Math.floor(tileX / tileSize);
 
-    console.log()
+    var clickedTile = { X: clickedCol * tileSize, Y: clickedRow * tileSize, Checked: true};
 
-    redrawTile(clickedCol, clickedRow);
+    dotnetInstance.invokeMethodAsync('UpdateTile', JSON.stringify(clickedTile));
 }
 
-function setCanvasSize() {
+export function initializeCanvas() {
     canvasWidth = tileSize * amountOfColumns;
-    canvas.width = canvasWidth;
     canvasHeight = tileSize * amountOfRows;
+
+    canvas.width = canvasWidth;
     canvas.height = canvasHeight;
 }
 
@@ -54,24 +51,26 @@ function clearCanvas() {
     context.clearRect(0, 0, canvasWidth, canvasHeight);
 }
 
-function drawGrid() {
+export function generateGrid() {
+    
     if (tileSize === 0) return;
 
-    setCanvasSize();
+    initializeCanvas();
     clearCanvas();
 
-    for (var i = 0; i <= amountOfRows; i++) {
-        for (var j = 0; j <= amountOfColumns; j++) {
-            drawRectangle(j * tileSize, i * tileSize, tileSize, tileSize, "transparent");
-            var topMostLeftCoordinate = { x: j * tileSize, y: i * tileSize }
-            squaresTopMostLeftCoordinates.push(topMostLeftCoordinate);
+    var tiles = [];
+
+    for (var i = 0; i < amountOfRows; i++) {
+        for (var j = 0; j < amountOfColumns; j++) {
+            var tile = { X: j * tileSize, Y: i * tileSize, Checked:false, LineColor:"gray", FillColor:"transparent", LineWidth: "1px" }
+            tiles.push(tile);
         }
     }
 
-    dotnetInstance.invokeMethodAsync('GetTileCoordinates', squaresTopMostLeftCoordinates);
+    dotnetInstance.invokeMethodAsync('SaveTiles', tiles);
 }
 
-function drawLine(x1, y1, x2, y2, color = "black", lineWidth = "1px") {
+export function drawLine(x1, y1, x2, y2, color = "black", lineWidth = "1px") {
     context.beginPath();
     context.moveTo(x1, y1);
     context.lineTo(x2, y2);
@@ -80,41 +79,38 @@ function drawLine(x1, y1, x2, y2, color = "black", lineWidth = "1px") {
     context.stroke();
 }
 
-function drawRectangle(x, y, width, height, color = "black", lineWidth = "1px") {
+export function drawRectangle(x, y, width, height, lineColor = "transparent", lineWidth = "1px", fillColor = "transparent") {
     context.beginPath();
     context.rect(x, y, width, height);
     context.lineWidth = lineWidth;
-    context.strokeStyle = color;
+    context.strokeStyle = lineColor;
     context.stroke();
+    context.fillStyle = fillColor;
+    context.fill();
 }
 
 export function setTileSize(value) {
     tileSize = value;
-    drawGrid();
 }
 
 export function setAmountOfColumns(value) {
     amountOfColumns = value;
-    drawGrid();
 }
 
 export function setAmountOfRows(value) {
     amountOfRows = value;
-    drawGrid();
 }
 
-function redrawTile(x, y) {
-    var topLeftCoordinateX = x * tileSize;
-    var topLeftCoordinateY = y * tileSize;
-
-    context.clearRect(topLeftCoordinateX, topLeftCoordinateY, tileSize, tileSize);
-    context.fillStyle = "hotpink"
-    context.fillRect(topLeftCoordinateX, topLeftCoordinateY, tileSize, tileSize); 
-
-    var tileCoordinates = { X: topLeftCoordinateX, Y: topLeftCoordinateY };
-    dotnetInstance.invokeMethodAsync('UpdateTileCheckedState', tileCoordinates );
+export function redrawTile(tile) {
+    clearRectangle(tile.x, tile.y, tileSize, tileSize);
+    drawRectangle(tile.x, tile.y, tileSize, tileSize, tile.lineColor, tile.lineWidth, tile.fillColor);
 }
 
-export function getTileCoordinates(dotNetHelper) {
-    dotnetInstance = dotNetHelper;
+function clearRectangle(x, y, width, height) {
+    context.clearRect(x, y, width, height);
+}
+
+
+export function initializeDotNetInstance(instance) {
+    dotnetInstance = instance;
 }
